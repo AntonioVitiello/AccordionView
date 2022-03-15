@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Accordion View</string>
+    <string name="collaps_symbol_2">▲</string>
+    <string name="expand_symbol_2">▼</string>
+    <string name="collaps_symbol_1">➖</string>
+    <string name="expand_symbol_1">➕</string>
+    <string name="collaps_symbol">\u2212</string>
+    <string name="expand_symbol">\u002B</string>
+    <string name="collaps_symbol_3">🔺</string>
+    <string name="expand_symbol_3">🔻</string>
+</resources>
