@@ -1,4 +1,4 @@
-package com.accordion.view
+package com.accordion.view.animation
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -14,8 +14,8 @@ import androidx.core.view.isVisible
 import androidx.transition.AutoTransition
 import androidx.transition.Transition
 import androidx.transition.TransitionManager
-import com.accordion.view.MyAccordionAdapter.ContentViewHolder
-import com.accordion.view.MyAccordionAdapter.TitleViewHolder
+import com.accordion.view.animation.MyAccordionAdapter.ContentViewHolder
+import com.accordion.view.animation.MyAccordionAdapter.TitleViewHolder
 
 /**
  * Created by Antonio Vitiello on 13/03/2022.

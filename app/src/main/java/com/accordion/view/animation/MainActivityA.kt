@@ -1,17 +1,18 @@
-package com.accordion.view
+package com.accordion.view.animation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import com.accordion.view.R
+import kotlinx.android.synthetic.main.activity_main_a.*
 
 /**
  * Created by Antonio Vitiello on 13/03/2022.
  */
-class MainActivity : AppCompatActivity() {
+class MainActivityA : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main_a)
         initComponents()
     }
 

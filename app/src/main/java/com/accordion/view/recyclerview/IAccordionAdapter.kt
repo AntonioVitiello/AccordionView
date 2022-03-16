@@ -1,8 +1,8 @@
-package com.accordion.view
+package com.accordion.view.recyclerview
 
 import android.view.View
 import android.view.ViewGroup
-import com.accordion.view.IAccordionAdapter.ViewHolder
+import com.accordion.view.recyclerview.IAccordionAdapter.ViewHolder
 
 interface IAccordionAdapter<T : ViewHolder, C : ViewHolder> {
 

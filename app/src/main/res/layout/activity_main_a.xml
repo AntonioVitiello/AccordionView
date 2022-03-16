@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:fillViewport="true">
 
-    <com.accordion.view.AccordionView
+    <com.accordion.view.animation.AccordionView
         android:id="@+id/accordionView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

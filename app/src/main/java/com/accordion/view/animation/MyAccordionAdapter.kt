@@ -1,4 +1,4 @@
-package com.accordion.view
+package com.accordion.view.animation
 
 import android.os.Build
 import android.text.Html
@@ -6,10 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.accordion.view.IAccordionAdapter.ViewHolder
-import com.accordion.view.MyAccordionAdapter.ContentViewHolder
-import com.accordion.view.MyAccordionAdapter.TitleViewHolder
-import kotlinx.android.synthetic.main.accordion_content_view.view.*
+import com.accordion.view.R
+import com.accordion.view.animation.IAccordionAdapter.ViewHolder
+import com.accordion.view.animation.MyAccordionAdapter.ContentViewHolder
+import com.accordion.view.animation.MyAccordionAdapter.TitleViewHolder
+import kotlinx.android.synthetic.main.accordion_content_view_a.view.*
 import kotlinx.android.synthetic.main.accordion_title_view.view.*
 
 /**
@@ -24,7 +25,7 @@ class MyAccordionAdapter() : IAccordionAdapter<TitleViewHolder, ContentViewHolde
     }
 
     override fun createContentViewHolder(parent: ViewGroup): ContentViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.accordion_content_view, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.accordion_content_view_a, parent, false)
         return ContentViewHolder(itemView)
     }
 

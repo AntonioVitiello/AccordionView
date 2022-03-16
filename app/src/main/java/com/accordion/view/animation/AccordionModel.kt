@@ -1,4 +1,4 @@
-package com.accordion.view
+package com.accordion.view.animation
 
 /**
  * Created by Antonio Vitiello on 13/03/2022.
