@@ -13,6 +13,7 @@ class MainActivityR : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_r)
+//        setContentView(R.layout.activity_main_r_1)
         initComponents()
     }
 

@@ -10,8 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AccordionView">
         <activity
-            android:name="com.accordion.view.animation.MainActivityA"
-            android:label="A-Accordion"
+            android:name="com.accordion.view.recyclerview.MainActivityR"
+            android:label="R-Accordion"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,8 +19,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.accordion.view.recyclerview.MainActivityR"
-            android:label="R-Accordion"
+            android:name="com.accordion.view.animation.MainActivityA"
+            android:label="A-Accordion"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

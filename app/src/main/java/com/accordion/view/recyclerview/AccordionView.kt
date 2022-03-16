@@ -7,6 +7,7 @@ import android.os.Looper
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewParent
 import android.widget.ScrollView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
@@ -28,12 +29,14 @@ class AccordionView @JvmOverloads constructor(context: Context, attrs: Attribute
     private lateinit var mAdapter: MyAccordionAdapter
     private val mHandler = Handler(Looper.getMainLooper())
     private var mTitleToScroll: View? = null
-    private var mCountScrollRetry = 4
+    private var mCountScrollRetry = 5
+    private var mScrollView: ScrollView? = null
 
 
     fun setAdapter(adapter: MyAccordionAdapter) {
         mAdapter = adapter
         render()
+        mScrollView = findScrollViewParentOrNull(this@AccordionView.parent)
     }
 
     private fun render() {
@@ -70,28 +73,46 @@ class AccordionView @JvmOverloads constructor(context: Context, attrs: Attribute
     }
 
     private fun forceScrollTo(titleView: View) {
-        val viewParent = this@AccordionView.parent
-        if (viewParent is ScrollView) {
+        mScrollView?.let { scrollView ->
             if (titleView != mTitleToScroll) {
                 mTitleToScroll = titleView
-                mCountScrollRetry = 4
+                mCountScrollRetry = 5
             }
             mHandler.postDelayed({
-                val titleY = titleView.y.toInt()
+                val offset = (this@AccordionView.y + titleView.y).toInt()
+                scrollView.smoothScrollTo(0, offset)
 //                Log.d(
 //                    "DEBUG",
 //                    "mCountScrollRetry=" + mCountScrollRetry +
-//                            ", canScrollVertically=" + viewParent.canScrollVertically(1) +
-//                            ", scrollY=" + viewParent.scrollY +
-//                            ", titleY=" + titleY
+//                            ", canScrollVertically=" + scrollView.canScrollVertically(1) +
+//                            ", scrollY=" + scrollView.scrollY +
+//                            ", titleY=" + titleView.y.toInt() +
+//                            ", offset=" + offset +
+//                            ", AccordionView.y=" + this@AccordionView.y +
+//                            ", title0.y=" + mTitleViewHolders[0].itemView.y +
+//                            ", title1.y=" + mTitleViewHolders[1].itemView.y +
+//                            ", title2.y=" + mTitleViewHolders[2].itemView.y +
+//                            ", title3.y=" + mTitleViewHolders[3].itemView.y
 //                )
-                viewParent.smoothScrollTo(0, titleY)
-                if (--mCountScrollRetry > 0 && viewParent.canScrollVertically(1) && viewParent.scrollY != titleY) {
+                if (--mCountScrollRetry > 0 && scrollView.canScrollVertically(1) && scrollView.scrollY != offset) {
                     forceScrollTo(titleView)
                 } else {
                     mTitleToScroll = null
                 }
             }, 100)
+        }
+    }
+
+    private fun findScrollViewParentOrNull(viewParent: ViewParent): ScrollView? {
+        return if (viewParent is ScrollView) {
+            viewParent
+        } else {
+            val parent = viewParent.parent
+            if (parent != null) {
+                findScrollViewParentOrNull(parent)
+            } else {
+                null
+            }
         }
     }
 
