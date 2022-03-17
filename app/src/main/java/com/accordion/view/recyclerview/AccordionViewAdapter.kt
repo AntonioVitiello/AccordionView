@@ -21,11 +21,11 @@ abstract class AccordionViewAdapter<T : ViewHolder, C : ViewHolder> : Observable
 
     abstract fun getItemCount(): Int
 
-    open class ViewHolder(val itemView: View)
-
     fun notifyDataSetChanged() {
         setChanged()
         notifyObservers()
     }
+
+    open class ViewHolder(val itemView: View)
 
 }
