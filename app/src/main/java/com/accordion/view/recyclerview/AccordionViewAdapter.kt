@@ -6,6 +6,10 @@ import com.accordion.view.recyclerview.AccordionViewAdapter.ViewHolder
 import java.util.*
 
 abstract class AccordionViewAdapter<T : ViewHolder, C : ViewHolder> : Observable() {
+    companion object {
+        const val COLLAPS_SYMBOL = "\u2212" // ➖
+        const val EXPAND_SYMBOL = "\u002B" // ➕
+    }
 
     abstract fun createTitleViewHolder(parent: ViewGroup): T
 

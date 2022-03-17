@@ -1,13 +1,11 @@
 package com.accordion.view.recyclerview
 
 import android.content.Context
-import android.os.Build
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import com.accordion.view.R
+import com.accordion.view.html
 import com.accordion.view.recyclerview.MyAccordionViewAdapter.ContentViewHolder
 import com.accordion.view.recyclerview.MyAccordionViewAdapter.TitleViewHolder
 import kotlinx.android.synthetic.main.accordion_content_view_r.view.*
@@ -19,11 +17,6 @@ import kotlinx.android.synthetic.main.accordion_title_view.view.*
 class MyAccordionViewAdapter(context: Context, listener: (String) -> Unit) : AccordionViewAdapter<TitleViewHolder, ContentViewHolder>() {
     private val mDataModels = mutableListOf<DataModel>()
     private val mAdapter = AccordionViewContentAdapter(context, listener)
-
-    companion object {
-        const val COLLAPS_SYMBOL = "\u2212" // ➖
-        const val EXPAND_SYMBOL = "\u002B" // ➕
-    }
 
 
     override fun createTitleViewHolder(parent: ViewGroup): TitleViewHolder {
@@ -56,14 +49,6 @@ class MyAccordionViewAdapter(context: Context, listener: (String) -> Unit) : Acc
         notifyDataSetChanged()
     }
 
-    @Suppress("DEPRECATION")
-    fun TextView.html(html: CharSequence) {
-        text = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-            Html.fromHtml(html.toString())
-        } else {
-            Html.fromHtml(html.toString(), Html.FROM_HTML_MODE_COMPACT)
-        }
-    }
 
     inner class TitleViewHolder(itemView: View) : ViewHolder(itemView) {
         fun bind(dataModel: DataModel, titleType: TitleType) {

@@ -247,4 +247,3 @@ class AccordionView @JvmOverloads constructor(context: Context, attrs: Attribute
     }
 
 }
-
