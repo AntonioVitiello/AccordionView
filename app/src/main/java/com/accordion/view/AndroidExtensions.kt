@@ -1,7 +1,10 @@
 package com.accordion.view
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.text.Html
+import android.view.MotionEvent
+import android.view.View
 import android.widget.TextView
 
 /**
@@ -14,5 +17,16 @@ fun TextView.html(html: CharSequence) {
         Html.fromHtml(html.toString())
     } else {
         Html.fromHtml(html.toString(), Html.FROM_HTML_MODE_COMPACT)
+    }
+}
+
+@SuppressLint("ClickableViewAccessibility")
+private fun View.setOnClickListener2(callback: (View) -> Unit) {
+    setOnTouchListener { view, event ->
+        if (event.actionMasked == MotionEvent.ACTION_UP) {
+            callback.invoke(view)
+            callOnClick()
+        }
+        true
     }
 }

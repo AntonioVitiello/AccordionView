@@ -1,11 +1,9 @@
 package com.accordion.view.recyclerview
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewParent
 import android.widget.ScrollView
@@ -58,22 +56,22 @@ class AccordionView @JvmOverloads constructor(context: Context, attrs: Attribute
         mTitleViewHolders.clear()
         for (index in 0 until mAdapter.getItemCount()) {
             val titleViewHolder = mAdapter.createTitleViewHolder(this)
-            with(titleViewHolder.itemView) {
+            titleViewHolder.itemView.apply {
                 id = View.generateViewId()
                 tag = id.toString()
-                setOnClickListener2 {
-                    if (index == mSelectedPosition && mContentViewHolder.itemView.isVisible) {
-                        closeCurrentPosition()
-                    } else {
-                        mContentViewHolder.itemView.isInvisible = true
-                        expandPosition(index)
-                        mContentViewHolder.itemView.isVisible = true
-                        forceScrollTo(this)
-                    }
-                }
-                mAdapter.bindTitle(titleViewHolder, index, getItemAction(index))
-                mTitleViewHolders.add(titleViewHolder)
             }
+            titleViewHolder.itemView.setOnClickListener {
+                if (index == mSelectedPosition && mContentViewHolder.itemView.isVisible) {
+                    closeCurrentPosition()
+                } else {
+                    mContentViewHolder.itemView.isInvisible = true
+                    expandPosition(index)
+                    mContentViewHolder.itemView.isVisible = true
+                    forceScrollTo(titleViewHolder.itemView)
+                }
+            }
+            mAdapter.bindTitle(titleViewHolder, index, getItemAction(index))
+            mTitleViewHolders.add(titleViewHolder)
         }
     }
 
@@ -233,17 +231,6 @@ class AccordionView @JvmOverloads constructor(context: Context, attrs: Attribute
             constraintSet.connect(contentView.id, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
         }
         set2.applyTo(this)
-    }
-
-    @SuppressLint("ClickableViewAccessibility")
-    private fun View.setOnClickListener2(callback: (View) -> Unit) {
-        setOnTouchListener { view, event ->
-            if (event.actionMasked == MotionEvent.ACTION_UP) {
-                callback.invoke(view)
-                callOnClick()
-            }
-            true
-        }
     }
 
 }
