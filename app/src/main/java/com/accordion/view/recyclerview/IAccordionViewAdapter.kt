@@ -2,9 +2,9 @@ package com.accordion.view.recyclerview
 
 import android.view.View
 import android.view.ViewGroup
-import com.accordion.view.recyclerview.IAccordionAdapter.ViewHolder
+import com.accordion.view.recyclerview.IAccordionViewAdapter.ViewHolder
 
-interface IAccordionAdapter<T : ViewHolder, C : ViewHolder> {
+interface IAccordionViewAdapter<T : ViewHolder, C : ViewHolder> {
 
     fun createTitleViewHolder(parent: ViewGroup): T
 
@@ -17,5 +17,9 @@ interface IAccordionAdapter<T : ViewHolder, C : ViewHolder> {
     fun getItemCount(): Int
 
     open class ViewHolder(val itemView: View)
+
+    fun notifyDataSetChanged() {
+
+    }
 
 }

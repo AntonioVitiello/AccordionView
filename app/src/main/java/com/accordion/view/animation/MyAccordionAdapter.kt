@@ -19,6 +19,12 @@ import kotlinx.android.synthetic.main.accordion_title_view.view.*
 class MyAccordionAdapter() : IAccordionAdapter<TitleViewHolder, ContentViewHolder> {
     private val mDataModels = mutableListOf<DataModel>()
 
+    companion object {
+        const val COLLAPS_SYMBOL = "\u2212" // ➖
+        const val EXPAND_SYMBOL = "\u002B" // ➕
+    }
+
+
     override fun createTitleViewHolder(parent: ViewGroup): TitleViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.accordion_title_view, parent, false)
         return TitleViewHolder(itemView)
@@ -62,8 +68,8 @@ class MyAccordionAdapter() : IAccordionAdapter<TitleViewHolder, ContentViewHolde
             itemView.apply {
                 titleTextView.text = dataModel.title
                 when (titleType) {
-                    TitleType.COLLAPSE -> titleIconView.html(context.getString(R.string.collaps_symbol))
-                    TitleType.EXPAND -> titleIconView.html(context.getString(R.string.expand_symbol))
+                    TitleType.COLLAPSE -> titleIconView.html(COLLAPS_SYMBOL)
+                    TitleType.EXPAND -> titleIconView.html(EXPAND_SYMBOL)
                 }
             }
         }

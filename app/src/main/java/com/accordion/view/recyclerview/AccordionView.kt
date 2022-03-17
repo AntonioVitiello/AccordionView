@@ -14,8 +14,8 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
-import com.accordion.view.recyclerview.MyAccordionAdapter.ContentViewHolder
-import com.accordion.view.recyclerview.MyAccordionAdapter.TitleViewHolder
+import com.accordion.view.recyclerview.MyAccordionViewAdapter.ContentViewHolder
+import com.accordion.view.recyclerview.MyAccordionViewAdapter.TitleViewHolder
 
 /**
  * Created by Antonio Vitiello on 13/03/2022.
@@ -26,14 +26,14 @@ class AccordionView @JvmOverloads constructor(context: Context, attrs: Attribute
     private val mTitleViewHolders = mutableListOf<TitleViewHolder>()
     private lateinit var mContentViewHolder: ContentViewHolder
     private var mSelectedPosition = 0
-    private lateinit var mAdapter: MyAccordionAdapter
+    private lateinit var mAdapter: MyAccordionViewAdapter
     private val mHandler = Handler(Looper.getMainLooper())
     private var mTitleToScroll: View? = null
     private var mCountScrollRetry = 5
     private var mScrollView: ScrollView? = null
 
 
-    fun setAdapter(adapter: MyAccordionAdapter) {
+    fun setAdapter(adapter: MyAccordionViewAdapter) {
         mAdapter = adapter
         render()
         mScrollView = findScrollViewParentOrNull(this@AccordionView.parent)
@@ -119,7 +119,7 @@ class AccordionView @JvmOverloads constructor(context: Context, attrs: Attribute
     /**
      * Update all titles and expand content at selected position
      */
-    private fun expandPosition(selectedPosition: Int) {
+    fun expandPosition(selectedPosition: Int) {
         if (selectedPosition < mAdapter.getItemCount() && selectedPosition >= 0) {
             mSelectedPosition = selectedPosition
             applyConstraint()

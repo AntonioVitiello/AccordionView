@@ -20,7 +20,7 @@ class MainActivityA : AppCompatActivity() {
         val adapter = MyAccordionAdapter()
         adapter.switchData(generateFakeData())
         accordionView.setAdapter(adapter)
-        //accordionView.updatePosition(3)
+        //accordionView.expandPosition(3)
     }
 
     private fun generateFakeData() = listOf(

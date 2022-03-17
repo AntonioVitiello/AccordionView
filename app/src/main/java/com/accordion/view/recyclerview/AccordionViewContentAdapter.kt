@@ -12,7 +12,9 @@ import kotlinx.android.synthetic.main.item_accordion_content.view.*
 /**
  * Created by Antonio Vitiello on 15/03/2022.
  */
-class AccordionContentAdapter(private val context: Context) : RecyclerView.Adapter<AccordionContentAdapter.ViewHolder>() {
+class AccordionViewContentAdapter(private val context: Context, val listener: (String) -> Unit) :
+    RecyclerView.Adapter<AccordionViewContentAdapter.ViewHolder>() {
+
     private val mDataItems = mutableListOf<String>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -40,6 +42,7 @@ class AccordionContentAdapter(private val context: Context) : RecyclerView.Adapt
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(data: String) {
             itemView.contentTextView.text = data
+            itemView.setOnClickListener { listener.invoke(data) }
         }
     }
 

@@ -1,6 +1,7 @@
 package com.accordion.view.recyclerview
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.accordion.view.R
 import kotlinx.android.synthetic.main.activity_main_r.*
@@ -9,6 +10,7 @@ import kotlinx.android.synthetic.main.activity_main_r.*
  * Created by Antonio Vitiello on 13/03/2022.
  */
 class MainActivityR : AppCompatActivity() {
+    private lateinit var mAdapter: MyAccordionViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,10 +20,12 @@ class MainActivityR : AppCompatActivity() {
     }
 
     private fun initComponents() {
-        val adapter = MyAccordionAdapter()
-        adapter.switchData(generateFakeData())
-        accordionView.setAdapter(adapter)
-        //accordionView.updatePosition(3)
+        mAdapter = MyAccordionViewAdapter(this) { data: String ->
+            Toast.makeText(this, data, Toast.LENGTH_SHORT).show()
+        }
+        mAdapter.switchData(generateFakeData())
+        accordionView.setAdapter(mAdapter)
+        //accordionView.expandPosition(2)
     }
 
     private fun generateFakeData() = listOf(

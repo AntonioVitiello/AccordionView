@@ -1,5 +1,6 @@
 package com.accordion.view.recyclerview
 
+import android.content.Context
 import android.os.Build
 import android.text.Html
 import android.view.LayoutInflater
@@ -7,17 +8,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.accordion.view.R
-import com.accordion.view.recyclerview.IAccordionAdapter.ViewHolder
-import com.accordion.view.recyclerview.MyAccordionAdapter.ContentViewHolder
-import com.accordion.view.recyclerview.MyAccordionAdapter.TitleViewHolder
+import com.accordion.view.recyclerview.IAccordionViewAdapter.ViewHolder
+import com.accordion.view.recyclerview.MyAccordionViewAdapter.ContentViewHolder
+import com.accordion.view.recyclerview.MyAccordionViewAdapter.TitleViewHolder
 import kotlinx.android.synthetic.main.accordion_content_view_r.view.*
 import kotlinx.android.synthetic.main.accordion_title_view.view.*
 
 /**
  * Created by Antonio Vitiello on 13/03/2022.
  */
-class MyAccordionAdapter() : IAccordionAdapter<TitleViewHolder, ContentViewHolder> {
+class MyAccordionViewAdapter(context: Context, listener: (String) -> Unit) : IAccordionViewAdapter<TitleViewHolder, ContentViewHolder> {
     private val mDataModels = mutableListOf<DataModel>()
+    private val mAdapter = AccordionViewContentAdapter(context, listener)
+
+    companion object {
+        const val COLLAPS_SYMBOL = "\u2212" // ➖
+        const val EXPAND_SYMBOL = "\u002B" // ➕
+    }
+
 
     override fun createTitleViewHolder(parent: ViewGroup): TitleViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.accordion_title_view, parent, false)
@@ -46,6 +54,7 @@ class MyAccordionAdapter() : IAccordionAdapter<TitleViewHolder, ContentViewHolde
         if (data != null) {
             mDataModels.addAll(data)
         }
+        notifyDataSetChanged()
     }
 
     @Suppress("DEPRECATION")
@@ -62,16 +71,14 @@ class MyAccordionAdapter() : IAccordionAdapter<TitleViewHolder, ContentViewHolde
             itemView.apply {
                 titleTextView.text = dataModel.title
                 when (titleType) {
-                    TitleType.COLLAPSE -> titleIconView.html(context.getString(R.string.collaps_symbol))
-                    TitleType.EXPAND -> titleIconView.html(context.getString(R.string.expand_symbol))
+                    TitleType.COLLAPSE -> titleIconView.html(COLLAPS_SYMBOL)
+                    TitleType.EXPAND -> titleIconView.html(EXPAND_SYMBOL)
                 }
             }
         }
     }
 
     inner class ContentViewHolder(itemView: View) : ViewHolder(itemView) {
-        private val mAdapter = AccordionContentAdapter(itemView.context)
-
         init {
             itemView.contentRecycler.adapter = mAdapter
         }

@@ -36,7 +36,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpUsage"
-        tools:text="@string/expand_symbol" />
+        tools:text="➕" />
 
     <View
         android:id="@+id/separator"
