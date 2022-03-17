@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.accordion.view.R
-import com.accordion.view.recyclerview.IAccordionViewAdapter.ViewHolder
 import com.accordion.view.recyclerview.MyAccordionViewAdapter.ContentViewHolder
 import com.accordion.view.recyclerview.MyAccordionViewAdapter.TitleViewHolder
 import kotlinx.android.synthetic.main.accordion_content_view_r.view.*
@@ -17,7 +16,7 @@ import kotlinx.android.synthetic.main.accordion_title_view.view.*
 /**
  * Created by Antonio Vitiello on 13/03/2022.
  */
-class MyAccordionViewAdapter(context: Context, listener: (String) -> Unit) : IAccordionViewAdapter<TitleViewHolder, ContentViewHolder> {
+class MyAccordionViewAdapter(context: Context, listener: (String) -> Unit) : AccordionViewAdapter<TitleViewHolder, ContentViewHolder>() {
     private val mDataModels = mutableListOf<DataModel>()
     private val mAdapter = AccordionViewContentAdapter(context, listener)
 

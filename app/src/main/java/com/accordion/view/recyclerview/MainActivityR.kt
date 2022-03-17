@@ -23,9 +23,11 @@ class MainActivityR : AppCompatActivity() {
         mAdapter = MyAccordionViewAdapter(this) { data: String ->
             Toast.makeText(this, data, Toast.LENGTH_SHORT).show()
         }
-        mAdapter.switchData(generateFakeData())
         accordionView.setAdapter(mAdapter)
-        //accordionView.expandPosition(2)
+
+        //when data is ready, may be from REST...
+        mAdapter.switchData(generateFakeData())
+        accordionView.expandPosition(2)
     }
 
     private fun generateFakeData() = listOf(

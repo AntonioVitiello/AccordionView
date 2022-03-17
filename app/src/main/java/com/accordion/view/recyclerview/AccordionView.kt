@@ -35,8 +35,13 @@ class AccordionView @JvmOverloads constructor(context: Context, attrs: Attribute
 
     fun setAdapter(adapter: MyAccordionViewAdapter) {
         mAdapter = adapter
-        render()
+        mAdapter.addObserver { observable, args ->
+            render()
+        }
         mScrollView = findScrollViewParentOrNull(this@AccordionView.parent)
+        if (mAdapter.getItemCount() > 0) {
+            render()
+        }
     }
 
     private fun render() {
