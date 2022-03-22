@@ -3,7 +3,7 @@ package com.accordion.view.animation
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.accordion.view.R
-import kotlinx.android.synthetic.main.activity_main_a.*
+import kotlinx.android.synthetic.main.activity_with_anim.*
 
 /**
  * Created by Antonio Vitiello on 13/03/2022.
@@ -12,7 +12,7 @@ class WithAnimActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_a)
+        setContentView(R.layout.activity_with_anim)
         initComponents()
     }
 

@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.accordion.view.R
-import kotlinx.android.synthetic.main.activity_main_r.*
+import kotlinx.android.synthetic.main.activity_with_rec_view.*
 
 /**
  * Created by Antonio Vitiello on 13/03/2022.
@@ -14,8 +14,8 @@ class WithRecViewActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_r)
-//        setContentView(R.layout.activity_main_r_1)
+        setContentView(R.layout.activity_with_rec_view)
+//        setContentView(R.layout.activity_with_rec_view_1)
         initComponents()
     }
 
