@@ -1,4 +1,4 @@
-package com.accordion.view.recyclerview
+package com.accordion.view.scroll.with_recyclerview
 
 import android.os.Bundle
 import android.widget.Toast
@@ -9,8 +9,8 @@ import kotlinx.android.synthetic.main.activity_main_r.*
 /**
  * Created by Antonio Vitiello on 13/03/2022.
  */
-class MainActivityR : AppCompatActivity() {
-    private lateinit var mAdapter: MyAccordionViewAdapter
+class WithRecViewActivity : AppCompatActivity() {
+    private lateinit var mAdapter: TitleAccordionViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,7 +20,7 @@ class MainActivityR : AppCompatActivity() {
     }
 
     private fun initComponents() {
-        mAdapter = MyAccordionViewAdapter(this) { data: String ->
+        mAdapter = TitleAccordionViewAdapter(this) { data: String ->
             Toast.makeText(this, data, Toast.LENGTH_SHORT).show()
         }
         accordionView.setAdapter(mAdapter)

@@ -27,7 +27,7 @@
                 android:layout_marginBottom="20dp"
                 android:background="@android:color/darker_gray" />
 
-            <com.accordion.view.recyclerview.AccordionView
+            <com.accordion.view.scroll.accordion.AccordionView
                 android:id="@+id/accordionView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

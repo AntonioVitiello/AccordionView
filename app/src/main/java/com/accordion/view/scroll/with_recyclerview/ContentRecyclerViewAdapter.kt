@@ -1,4 +1,4 @@
-package com.accordion.view.recyclerview
+package com.accordion.view.scroll.with_recyclerview
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -12,8 +12,8 @@ import kotlinx.android.synthetic.main.item_accordion_content.view.*
 /**
  * Created by Antonio Vitiello on 15/03/2022.
  */
-class AccordionViewContentAdapter(private val context: Context, val listener: (String) -> Unit) :
-    RecyclerView.Adapter<AccordionViewContentAdapter.ViewHolder>() {
+class ContentRecyclerViewAdapter(private val context: Context, val listener: (String) -> Unit) :
+    RecyclerView.Adapter<ContentRecyclerViewAdapter.ViewHolder>() {
 
     private val mDataItems = mutableListOf<String>()
 

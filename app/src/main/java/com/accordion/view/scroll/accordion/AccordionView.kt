@@ -1,4 +1,4 @@
-package com.accordion.view.recyclerview
+package com.accordion.view.scroll.accordion
 
 import android.content.Context
 import android.os.Handler
@@ -12,27 +12,31 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
-import com.accordion.view.recyclerview.MyAccordionViewAdapter.ContentViewHolder
-import com.accordion.view.recyclerview.MyAccordionViewAdapter.TitleViewHolder
+import com.accordion.view.scroll.accordion.AccordionViewAdapter.TitleType
+import com.accordion.view.scroll.accordion.AccordionViewAdapter.ViewHolder
 
 /**
  * Created by Antonio Vitiello on 13/03/2022.
  */
-class AccordionView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
-    ConstraintLayout(context, attrs, defStyleAttr) {
+class AccordionView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : ConstraintLayout(context, attrs, defStyleAttr) {
 
-    private val mTitleViewHolders = mutableListOf<TitleViewHolder>()
-    private lateinit var mContentViewHolder: ContentViewHolder
+    private val mTitleViewHolders = mutableListOf<ViewHolder>()
+    private lateinit var mContentViewHolder: ViewHolder
     private var mSelectedPosition = 0
-    private lateinit var mAdapter: MyAccordionViewAdapter
+    private lateinit var mAdapter: AccordionViewAdapter<ViewHolder, ViewHolder>
     private val mHandler = Handler(Looper.getMainLooper())
     private var mTitleToScroll: View? = null
     private var mCountScrollRetry = 5
     private var mScrollView: ScrollView? = null
 
 
-    fun setAdapter(adapter: MyAccordionViewAdapter) {
-        mAdapter = adapter
+    @Suppress("UNCHECKED_CAST", "UNUSED_ANONYMOUS_PARAMETER")
+    fun <A, B> setAdapter(adapter: AccordionViewAdapter<A, B>) where A : ViewHolder, B : ViewHolder {
+        mAdapter = adapter as AccordionViewAdapter<ViewHolder, ViewHolder>
         mAdapter.addObserver { observable, args ->
             render()
         }

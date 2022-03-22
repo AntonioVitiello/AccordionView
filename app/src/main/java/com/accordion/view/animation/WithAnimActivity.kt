@@ -8,7 +8,7 @@ import kotlinx.android.synthetic.main.activity_main_a.*
 /**
  * Created by Antonio Vitiello on 13/03/2022.
  */
-class MainActivityA : AppCompatActivity() {
+class WithAnimActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
