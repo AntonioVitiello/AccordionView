@@ -9,21 +9,18 @@ import android.view.ViewParent
 import android.widget.ScrollView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
+import com.accordion.view.R
 import com.accordion.view.scroll.accordion.AccordionViewAdapter.TitleType
 import com.accordion.view.scroll.accordion.AccordionViewAdapter.ViewHolder
 
 /**
  * Created by Antonio Vitiello on 13/03/2022.
  */
-class AccordionView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : ConstraintLayout(context, attrs, defStyleAttr) {
-
+class AccordionView : ConstraintLayout {
     private val mTitleViewHolders = mutableListOf<ViewHolder>()
     private lateinit var mContentViewHolder: ViewHolder
     private var mSelectedPosition = 0
@@ -33,6 +30,14 @@ class AccordionView @JvmOverloads constructor(
     private var mCountScrollRetry = 5
     private var mScrollView: ScrollView? = null
 
+
+    constructor(context: Context) : this(context, null)
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+        if (isInEditMode) {
+            background = ContextCompat.getDrawable(context, R.drawable.ic_launcher_foreground)
+        }
+    }
 
     @Suppress("UNCHECKED_CAST", "UNUSED_ANONYMOUS_PARAMETER")
     fun <A, B> setAdapter(adapter: AccordionViewAdapter<A, B>) where A : ViewHolder, B : ViewHolder {
