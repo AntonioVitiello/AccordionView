@@ -5,6 +5,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
 import android.view.View
+import android.view.ViewGroup
 import android.view.ViewParent
 import android.widget.ScrollView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -35,7 +36,7 @@ class AccordionView : ConstraintLayout {
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         if (isInEditMode) {
-            background = ContextCompat.getDrawable(context, R.drawable.ic_launcher_foreground)
+            background = ContextCompat.getDrawable(context, R.drawable.ic_accordion)
         }
     }
 
@@ -155,12 +156,22 @@ class AccordionView : ConstraintLayout {
     }
 
     private fun createContent() {
+        clearContentView()
         mContentViewHolder = mAdapter.createContentViewHolder(this)
         with(mContentViewHolder.itemView) {
             id = View.generateViewId()
             tag = id.toString()
         }
         mAdapter.bindContent(mContentViewHolder, mSelectedPosition)
+    }
+
+    private fun clearContentView() {
+        if (::mContentViewHolder.isInitialized) {
+            val viewParent = mContentViewHolder.itemView.parent
+            if (viewParent is ViewGroup) {
+                viewParent.removeAllViews()
+            }
+        }
     }
 
     private fun addAllViews() {
