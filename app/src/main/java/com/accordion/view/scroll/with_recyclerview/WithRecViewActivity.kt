@@ -28,6 +28,7 @@ class WithRecViewActivity : AppCompatActivity() {
         //when data is ready, may be from REST...
         mAdapter.switchData(generateFakeData())
         accordionView.expandPosition(2)
+//        accordionView.closeCurrentPosition()
     }
 
     private fun generateFakeData() = listOf(

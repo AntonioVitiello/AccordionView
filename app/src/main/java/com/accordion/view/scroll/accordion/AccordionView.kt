@@ -140,7 +140,7 @@ class AccordionView : ConstraintLayout {
         }
     }
 
-    private fun closeCurrentPosition() {
+    fun closeCurrentPosition() {
         val lastPosition = mAdapter.getItemCount() - 1
         mContentViewHolder.itemView.isInvisible = true
         expandPosition(lastPosition)
