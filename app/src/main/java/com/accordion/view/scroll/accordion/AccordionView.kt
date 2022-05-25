@@ -30,6 +30,8 @@ class AccordionView : ConstraintLayout {
     private var mTitleToScroll: View? = null
     private var mCountScrollRetry = 5
     private var mScrollView: ScrollView? = null
+    val currentPosition
+        get() = mSelectedPosition
 
 
     constructor(context: Context) : this(context, null)
@@ -130,13 +132,22 @@ class AccordionView : ConstraintLayout {
     }
 
     /**
-     * Update all titles and expand content at selected position
+     * Update all titles and expand content at selected position, no scroll provided
      */
     fun expandPosition(selectedPosition: Int) {
         if (selectedPosition < mAdapter.getItemCount() && selectedPosition >= 0) {
             mSelectedPosition = selectedPosition
             applyConstraint()
             onBindAllViewHolders()
+        }
+    }
+
+    /**
+     * Expand and scroll content at selected position
+     */
+    fun performClickPosition(position: Int) {
+        if(position >= 0 && position < mTitleViewHolders.size) {
+            mTitleViewHolders[position].itemView.performClick()
         }
     }
 
