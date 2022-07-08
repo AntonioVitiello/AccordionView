@@ -7,13 +7,13 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewParent
-import android.widget.ScrollView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
+import androidx.core.widget.NestedScrollView
 import com.accordion.view.R
 import com.accordion.view.scroll.accordion.AccordionViewAdapter.TitleType
 import com.accordion.view.scroll.accordion.AccordionViewAdapter.ViewHolder
@@ -27,9 +27,7 @@ class AccordionView : ConstraintLayout {
     private var mSelectedPosition = 0
     private lateinit var mAdapter: AccordionViewAdapter<ViewHolder, ViewHolder>
     private val mHandler = Handler(Looper.getMainLooper())
-    private var mTitleToScroll: View? = null
-    private var mCountScrollRetry = 5
-    private var mScrollView: ScrollView? = null
+    private var mScrollView: NestedScrollView? = null
     val currentPosition
         get() = mSelectedPosition
 
@@ -87,39 +85,47 @@ class AccordionView : ConstraintLayout {
         }
     }
 
-    private fun forceScrollTo(titleView: View) {
+    private fun forceScrollTo(titleView: View, attempt: Int = 5) {
         mScrollView?.let { scrollView ->
-            if (titleView != mTitleToScroll) {
-                mTitleToScroll = titleView
-                mCountScrollRetry = 5
-            }
+            val titleY = (this@AccordionView.y + titleView.y).toInt()
+            scrollView.smoothScrollTo(0, titleY)
+//            Log.e("""DEBUG AAA
+//                | attempt=$attempt,
+//                | canScrollVertically=${scrollView.canScrollVertically(1)},
+//                | scrollY=${scrollView.scrollY},
+//                | titleView.y=${titleView.y.toInt()},
+//                | titleY=$titleY,
+//                | AccordionView.y=${this@AccordionView.y},
+//                | title0.y=${mTitleViewHolders[0].itemView.y},
+//                | title1.y=${mTitleViewHolders[1].itemView.y},
+//                | title2.y=${mTitleViewHolders[2].itemView.y},
+//                | title3.y=${mTitleViewHolders[3].itemView.y}""".trimMargin(), this@AccordionView)
             mHandler.postDelayed({
-                val offset = (this@AccordionView.y + titleView.y).toInt()
-                scrollView.smoothScrollTo(0, offset)
-//                Log.d(
-//                    "DEBUG",
-//                    "mCountScrollRetry=" + mCountScrollRetry +
-//                            ", canScrollVertically=" + scrollView.canScrollVertically(1) +
-//                            ", scrollY=" + scrollView.scrollY +
-//                            ", titleY=" + titleView.y.toInt() +
-//                            ", offset=" + offset +
-//                            ", AccordionView.y=" + this@AccordionView.y +
-//                            ", title0.y=" + mTitleViewHolders[0].itemView.y +
-//                            ", title1.y=" + mTitleViewHolders[1].itemView.y +
-//                            ", title2.y=" + mTitleViewHolders[2].itemView.y +
-//                            ", title3.y=" + mTitleViewHolders[3].itemView.y
-//                )
-                if (--mCountScrollRetry > 0 && scrollView.canScrollVertically(1) && scrollView.scrollY != offset) {
-                    forceScrollTo(titleView)
-                } else {
-                    mTitleToScroll = null
+                if (scrollView.canScrollVertically(1) && scrollView.scrollY != titleY && attempt - 1 > 0) {
+                    forceScrollTo(titleView, attempt - 1)
                 }
             }, 100)
         }
     }
 
-    private fun findScrollViewParentOrNull(viewParent: ViewParent): ScrollView? {
-        return if (viewParent is ScrollView) {
+    private fun forceScrollTop(attempt: Int = 5) {
+        mScrollView?.let { scrollView ->
+            scrollView.smoothScrollTo(0, 0)
+//            Log.e("""DEBUG AAA
+//                    | attempt=$attempt,
+//                    | canScrollVertically=${scrollView.canScrollVertically(1)},
+//                    | scrollY=${scrollView.scrollY},
+//                    | AccordionView.y=${this@AccordionView.y}""".trimMargin(), this@AccordionView)
+            mHandler.postDelayed({
+                if (scrollView.canScrollVertically(1) && scrollView.scrollY > 0 && attempt - 1 > 0) {
+                    forceScrollTop(attempt - 1)
+                }
+            }, 100)
+        }
+    }
+
+    private fun findScrollViewParentOrNull(viewParent: ViewParent): NestedScrollView? {
+        return if (viewParent is NestedScrollView) {
             viewParent
         } else {
             val parent = viewParent.parent
@@ -134,9 +140,12 @@ class AccordionView : ConstraintLayout {
     /**
      * Update all titles and expand content at selected position, no scroll provided
      */
-    fun expandPosition(selectedPosition: Int) {
+    fun expandPosition(selectedPosition: Int, scrollToPosition: Boolean = true) {
         if (selectedPosition < mAdapter.getItemCount() && selectedPosition >= 0) {
             mSelectedPosition = selectedPosition
+            if (scrollToPosition) {
+                forceScrollTo(mTitleViewHolders[selectedPosition].itemView)
+            }
             applyConstraint()
             onBindAllViewHolders()
         }
@@ -146,7 +155,7 @@ class AccordionView : ConstraintLayout {
      * Expand and scroll content at selected position
      */
     fun performClickPosition(position: Int) {
-        if(position >= 0 && position < mTitleViewHolders.size) {
+        if (position >= 0 && position < mTitleViewHolders.size) {
             mTitleViewHolders[position].itemView.performClick()
         }
     }
@@ -154,9 +163,10 @@ class AccordionView : ConstraintLayout {
     fun closeCurrentPosition() {
         val lastPosition = mAdapter.getItemCount() - 1
         mContentViewHolder.itemView.isInvisible = true
-        expandPosition(lastPosition)
+        expandPosition(lastPosition, false)
         mAdapter.bindTitle(mTitleViewHolders[lastPosition], lastPosition, TitleType.EXPAND)
         mContentViewHolder.itemView.isGone = true
+        forceScrollTop()
     }
 
     private fun onBindAllViewHolders() {

@@ -1,23 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rowContainer"
+    android:id="@+id/contentRecycler"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:nestedScrollingEnabled="false"
+    android:orientation="vertical"
     android:paddingHorizontal="20dp"
     android:paddingTop="8dp"
-    android:paddingBottom="20dp">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/contentRecycler"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:nestedScrollingEnabled="false"
-        android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:ignore="UnusedAttribute"
-        tools:itemCount="5"
-        tools:listitem="@layout/item_accordion_content" />
-
-</FrameLayout>
+    android:paddingBottom="20dp"
+    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+    tools:ignore="UnusedAttribute"
+    tools:itemCount="5"
+    tools:listitem="@layout/item_accordion_content" />

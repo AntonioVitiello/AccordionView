@@ -10,7 +10,7 @@
         android:layout_marginBottom="20dp"
         android:background="@android:color/darker_gray" />
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
@@ -34,5 +34,5 @@
                 android:background="@android:color/white" />
 
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>
