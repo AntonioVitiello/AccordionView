@@ -43,20 +43,18 @@ class AccordionView : ConstraintLayout {
     @Suppress("UNCHECKED_CAST", "UNUSED_ANONYMOUS_PARAMETER")
     fun <A, B> setAdapter(adapter: AccordionViewAdapter<A, B>) where A : ViewHolder, B : ViewHolder {
         mAdapter = adapter as AccordionViewAdapter<ViewHolder, ViewHolder>
-        mAdapter.addObserver { observable, args ->
-            render()
-        }
+        mAdapter.addObserver { observable, args -> render() }
         mScrollView = findScrollViewParentOrNull(this@AccordionView.parent)
-        if (mAdapter.getItemCount() > 0) {
-            render()
-        }
+        render()
     }
 
     private fun render() {
-        createTitleViews()
-        createContent()
-        addAllViews()
-        applyConstraint()
+        if (mAdapter.getItemCount() > 0) {
+            createTitleViews()
+            createContent()
+            addAllViews()
+            applyConstraint()
+        }
     }
 
     /**
