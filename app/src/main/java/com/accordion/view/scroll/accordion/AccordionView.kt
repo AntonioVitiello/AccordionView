@@ -159,12 +159,14 @@ class AccordionView : ConstraintLayout {
     }
 
     fun closeCurrentPosition() {
-        val lastPosition = mAdapter.getItemCount() - 1
-        mContentViewHolder.itemView.isInvisible = true
-        expandPosition(lastPosition, false)
-        mAdapter.bindTitle(mTitleViewHolders[lastPosition], lastPosition, TitleType.EXPAND)
-        mContentViewHolder.itemView.isGone = true
-        forceScrollTop()
+        if (mAdapter.getItemCount() > 0) {
+            val lastPosition = mAdapter.getItemCount() - 1
+            mContentViewHolder.itemView.isInvisible = true
+            expandPosition(lastPosition, false)
+            mAdapter.bindTitle(mTitleViewHolders[lastPosition], lastPosition, TitleType.EXPAND)
+            mContentViewHolder.itemView.isGone = true
+            forceScrollTop()
+        }
     }
 
     private fun onBindAllViewHolders() {
